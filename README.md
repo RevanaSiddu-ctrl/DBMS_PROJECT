@@ -52,7 +52,7 @@ DBMS_PROJECT/
 | Member | Primary Focus | Areas of Ownership |
 | :--- | :--- | :--- |
 | **Revan Siddu** | **Database & SQL Engine** | Schema architecture, constraints, PL/pgSQL triggers, commit procedures, diff functions, and rollback logic. |
-| **Teammate** | **Backend & Frontend** | Node.js Express REST APIs, Supabase connectivity, staging endpoints, commit routes, and web dashboard UI. |
+| **Nivas** | **Backend & Frontend** | Node.js Express REST APIs, Supabase connectivity, staging endpoints, commit routes, and web dashboard UI. |
 
 ---
 
@@ -90,11 +90,37 @@ npm run dev
 The backend server runs on `http://localhost:5000`. You can check server health at:
 - `http://localhost:5000/api/health`
 
+### 6. Run Phase 2 Integration Tests
+```bash
+npm run test:phase2
+```
+Tests repository creation, student mutations, automatic trigger delta capture, commit creation, and commit history against Supabase.
+
+---
+
+## 🔌 REST API Endpoints (Phase 2)
+
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `GET` | `/api/health` | Server and database connectivity check |
+| `GET` | `/api/repositories` | List all repositories |
+| `POST` | `/api/repositories` | Create a repository with default `main` branch |
+| `GET` | `/api/students?repo_id=:id` | Fetch current student records |
+| `POST` | `/api/students` | Insert student row (triggers automatic change tracking) |
+| `PUT` | `/api/students/:id` | Update student details (triggers diff capture) |
+| `DELETE` | `/api/students/:id` | Delete student row (triggers deletion capture) |
+| `GET` | `/api/changes/pending?repo_id=:id` | View uncommitted changes (Git Status) |
+| `POST` | `/api/commits` | Atomically commit pending changes to history (Git Commit) |
+| `GET` | `/api/commits?repo_id=:id` | View commit history timeline (Git Log) |
+| `GET` | `/api/commits/:id` | Inspect commit details and recorded row versions |
+| `GET` | `/api/commits/diff?from=:c1&to=:c2` | Compare two commits (Git Diff) |
+| `POST` | `/api/commits/:id/rollback` | Revert student records to target historical commit |
+
 ---
 
 ## 🔄 Current Project Status
 - [x] **Database Schema & Constraints:** Applied to Supabase.
 - [x] **Automatic Change Tracking Triggers:** Active on `students` table.
 - [x] **Backend Infrastructure:** Node.js, Express, connection pool, and migration runner initialized.
-- [ ] **Backend Phase 2:** REST API endpoints for Student CRUD, pending changes, and commits (In Progress).
+- [x] **Backend Phase 2:** REST API endpoints for Repositories, Student CRUD, Staging, Commits, and Rollback (Complete & Tested).
 - [ ] **Frontend Phase 3:** Web Dashboard, staging view, diff visualizer, and rollback UI.

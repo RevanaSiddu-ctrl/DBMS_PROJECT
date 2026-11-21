@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const db = require("./db");
+const apiRoutes = require("./routes");
 
 const app = express();
 
@@ -58,11 +59,14 @@ app.get("/api/health", async (req, res) => {
   }
 });
 
+// Mount Core Version Control & Data REST APIs
+app.use("/api", apiRoutes);
+
 // Centralized error handler
 app.use((err, req, res, next) => {
-  console.error("Unhandled error:", err);
-  res.status(500).json({
-    error: "Internal Server Error",
+  console.error("API Error:", err);
+  res.status(err.status || 500).json({
+    error: err.name || "Internal Server Error",
     message: err.message,
   });
 });
