@@ -1,0 +1,17 @@
+# Personal working tasks
+TEAMMATE_2_TODO.md
+
+# Environment & Credentials
+.env
+.env.*
+!.env.example
+
+# Dependencies & Builds
+node_modules/
+dist/
+build/
+__pycache__/
+*.pyc
+
+# System files
+.DS_Store
