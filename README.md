@@ -83,22 +83,33 @@ Whenever new `.sql` scripts are added to `database/`, apply them to Supabase in 
 npm run migrate
 ```
 
-### 5. Start the Development Server
+### 5. Start the Development Servers
+
+#### Backend API (Port 5000):
 ```bash
+cd SQLVault/backend
 npm run dev
 ```
-The backend server runs on `http://localhost:5000`. You can check server health at:
-- `http://localhost:5000/api/health`
+Health check: `http://localhost:5000/api/health`
+
+#### Frontend Web Dashboard (Port 3000):
+```bash
+cd SQLVault/frontend
+npm install
+npm run dev
+```
+Studio Dashboard: `http://localhost:3000`
 
 ### 6. Run Phase 2 Integration Tests
 ```bash
+cd SQLVault/backend
 npm run test:phase2
 ```
 Tests repository creation, student mutations, automatic trigger delta capture, commit creation, and commit history against Supabase.
 
 ---
 
-## 🔌 REST API Endpoints (Phase 2)
+## 🔌 REST API Endpoints (Phase 2 & Phase 3)
 
 | Method | Endpoint | Description |
 | :--- | :--- | :--- |
@@ -115,6 +126,7 @@ Tests repository creation, student mutations, automatic trigger delta capture, c
 | `GET` | `/api/commits/:id` | Inspect commit details and recorded row versions |
 | `GET` | `/api/commits/diff?from=:c1&to=:c2` | Compare two commits (Git Diff) |
 | `POST` | `/api/commits/:id/rollback` | Revert student records to target historical commit |
+| `POST` | `/api/query` | Universal SQL runner (executes mutations in context-aware transactions) |
 
 ---
 
@@ -123,4 +135,4 @@ Tests repository creation, student mutations, automatic trigger delta capture, c
 - [x] **Automatic Change Tracking Triggers:** Active on `students` table.
 - [x] **Backend Infrastructure:** Node.js, Express, connection pool, and migration runner initialized.
 - [x] **Backend Phase 2:** REST API endpoints for Repositories, Student CRUD, Staging, Commits, and Rollback (Complete & Tested).
-- [ ] **Frontend Phase 3:** Web Dashboard, staging view, diff visualizer, and rollback UI.
+- [x] **Frontend Phase 3:** Full-Screen Web Dashboard, SQL Editor, Schema Graph, Staging & Rollback UI (Complete & Tested).
